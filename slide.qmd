@@ -21,7 +21,7 @@ box_size = 10,
 border = 0)
 
 # Adding data to the instance 'qr'
-qr.add_data("https://marcellgranat.com/api-papi")
+qr.add_data("https://marcellgranat.github.io/APIcourse/")
 
 qr.make(fit = True)
 img = qr.make_image(fill_color = 'darkblue', back_color = 'white')
@@ -45,7 +45,7 @@ API Tools for Economists
 
 <h3>
 
-`r fontawesome::fa("file-powerpoint", "#aa091d")`  <https://marcellgranat.com/api-papi>
+`r fontawesome::fa("file-powerpoint", "#aa091d")`  <https://marcellgranat.github.io/APIcourse/>
 
 ![](qrcode.png){.absolute bottom="10" right="10" width="200"}
 
@@ -81,15 +81,17 @@ An API (**Application Programming Interface**) is a set of rules and tools that 
 
 ## What is an API? 🤷‍♂️
 
-::::: columns
-::: {.column width="60%"}
+:::::: columns
+:::: {.column width="60%"}
+::: r-fit-text
 > You’re at a restaurant. The **menu represents the API**, showing you what’s available. **You don’t need to know how the kitchen works**; *you simply place your order* by choosing something from the menu. The waiter (the API) takes your request to the kitchen and brings you back the result. In the case of an API, it works similarly – you send a request and get a response.
 :::
+::::
 
 ::: {.column width="40%"}
 ![](images/CleanShot%202024-10-16%20at%2010.15.48@2x.png){fig-align="center"}
 :::
-:::::
+::::::
 
 ## What is an API? 🤷‍♂️
 
@@ -99,7 +101,7 @@ Often the simplest function in your programming language are calling an API in t
 
 # Minimal example to host 🗂️
 
-------------------------------------------------------------------------
+## Plumber
 
 ::::: columns
 ::: {.column width="40%"}
@@ -192,6 +194,12 @@ These are pretty common.
 
 -   **429 Too Many Requests**: The client has sent too many requests in a given time period (rate-limiting), and the server is rejecting further requests.
 :::
+
+## Host 🧑‍🍳
+
+This API currently available only in your computer. You can use VS Code to publish it to the web, or ngrok (paid) to a more secure usage.
+
+![](images/paste-1.png){fig-align="center"}
 
 ## Request in R
 

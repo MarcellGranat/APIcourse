@@ -406,7 +406,7 @@
 <p><br></p>
 <h3>
 </h3>
-<p><svg aria-hidden="true" role="img" viewbox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#aa091d;overflow:visible;position:relative;"><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm72 208c-13.3 0-24 10.7-24 24V336v56c0 13.3 10.7 24 24 24s24-10.7 24-24V360h44c42 0 76-34 76-76s-34-76-76-76H136zm68 104H160V256h44c15.5 0 28 12.5 28 28s-12.5 28-28 28z"></path></svg>&nbsp; <a href="https://marcellgranat.com/api-papi" class="uri">https://marcellgranat.com/api-papi</a></p>
+<p><svg aria-hidden="true" role="img" viewbox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#aa091d;overflow:visible;position:relative;"><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm72 208c-13.3 0-24 10.7-24 24V336v56c0 13.3 10.7 24 24 24s24-10.7 24-24V360h44c42 0 76-34 76-76s-34-76-76-76H136zm68 104H160V256h44c15.5 0 28 12.5 28 28s-12.5 28-28 28z"></path></svg>&nbsp; <a href="https://marcellgranat.github.io/APIcourse/" class="uri">https://marcellgranat.github.io/APIcourse/</a></p>
 <p><img data-src="qrcode.png" class="absolute" style="bottom: 10px; right: 10px; width: 200px; "></p>
 </section><section id="what-is-an-api" class="slide level2"><h2>What is an API? 🤷‍♂️</h2>
 <p>An API (<strong>Application Programming Interface</strong>) is a set of rules and tools that allows different <strong>software applications to communicate with each other</strong>. Think of it as a bridge between two systems. One system (like a website or a database) provides data or functionality, and another system (like your research tool) can request that data or functionality through the API.</p>
@@ -416,9 +416,11 @@
 </section><section id="what-is-an-api-1" class="slide level2"><h2>What is an API? 🤷‍♂️</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
+<div class="r-fit-text">
 <blockquote>
 <p>You’re at a restaurant. The <strong>menu represents the API</strong>, showing you what’s available. <strong>You don’t need to know how the kitchen works</strong>; <em>you simply place your order</em> by choosing something from the menu. The waiter (the API) takes your request to the kitchen and brings you back the result. In the case of an API, it works similarly – you send a request and get a response.</p>
 </blockquote>
+</div>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="images/CleanShot%202024-10-16%20at%2010.15.48@2x.png" class="quarto-figure quarto-figure-center"></p>
@@ -430,7 +432,8 @@
 
 <img data-src="images/CleanShot%202024-10-16%20at%2009.37.47@2x.png" class="quarto-figure quarto-figure-center r-stretch"></section><section><section id="minimal-example-to-host" class="title-slide slide level1"><h1>Minimal example to host 🗂️</h1>
 
-</section><section class="slide level2"><div class="columns">
+</section><section id="plumber" class="slide level2"><h2>Plumber</h2>
+<div class="columns">
 <div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="images/CleanShot%202024-10-16%20at%2009.49.36@2x.png" class="quarto-figure quarto-figure-center"></p>
@@ -526,7 +529,10 @@
 <li class="fragment"><p><strong>429 Too Many Requests</strong>: The client has sent too many requests in a given time period (rate-limiting), and the server is rejecting further requests.</p></li>
 </ul>
 </div>
-</section><section id="request-in-r" class="slide level2"><h2>Request in R</h2>
+</section><section id="host" class="slide level2"><h2>Host 🧑‍🍳</h2>
+<p>This API currently available only in your computer. You can use VS Code to publish it to the web, or ngrok (paid) to a more secure usage.</p>
+
+<img data-src="images/paste-1.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="request-in-r" class="slide level2"><h2>Request in R</h2>
 <p>If you need the orig call</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>response <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(<span class="st">"http://127.0.0.1:4066/echo?msg=test%20message"</span>)</span>
