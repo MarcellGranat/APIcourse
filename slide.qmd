@@ -1,0 +1,378 @@
+---
+format: mnbinstitute-revealjs
+bibliography: references.bib
+cache: true
+logo: "mnb.png"
+---
+
+```{r setup}
+library(tidyverse)
+source(here::here("_extensions", "marcellgranat", "mnbinstitute", "template_fns.R"))
+```
+
+```{python}
+#| echo: false
+#| eval: false
+import qrcode
+
+# Creating an instance of QRCode class
+qr = qrcode.QRCode(version = 4,
+box_size = 10,
+border = 0)
+
+# Adding data to the instance 'qr'
+qr.add_data("https://marcellgranat.com/api-papi")
+
+qr.make(fit = True)
+img = qr.make_image(fill_color = 'darkblue', back_color = 'white')
+
+img.save('qrcode.png')
+```
+
+<h2>(P)API</h2>
+
+API Tools for Economists
+
+<hr>
+
+<p>[Marcell Granát]{style="font-weight: bold;"} \| [Economist at]{style="color: grey;"}</p>
+
+![](mnb.png){width="216"}
+
+[2023]{style="color: grey;"}
+
+<br>
+
+<h3>
+
+`r fontawesome::fa("file-powerpoint", "#aa091d")`  <https://marcellgranat.com/api-papi>
+
+![](qrcode.png){.absolute bottom="10" right="10" width="200"}
+
+```{r}
+#| results: hide
+#| include: false
+library(extrafont)
+
+theme_set(
+  theme_bw(base_family = "IBM Plex Sans", base_size = 18) + 
+    theme(
+      title = element_text(size = 20, face = "bold"),
+      strip.text = element_text(size = 20, 
+                                family = "IBM Plex Sans Medium",
+                                face = NULL),
+      strip.background = element_rect(fill = "#2e7b82")
+    )
+)
+
+update_geom_defaults("point", list(color = "#2e7b82", alpha = 0.8, size = 3))
+update_geom_defaults("rect", list(fill = "#2e7b82", alpha = 0.8, size = 2))
+update_geom_defaults("line", list(color = "#2e7b82", alpha = 0.9, 
+                                  linewidth = 1.2))
+update_geom_defaults("text", list(color = "#2e7b82", alpha = 0.8))
+geom_text(family = "IBM Plex Sans")
+```
+
+## What is an API? 🤷‍♂️
+
+An API (**Application Programming Interface**) is a set of rules and tools that allows different **software applications to communicate with each other**. Think of it as a bridge between two systems. One system (like a website or a database) provides data or functionality, and another system (like your research tool) can request that data or functionality through the API.
+
+> ↔️ In constrast, UI is the User Interface 🤓. Something that you might use by clicking 🖱️ in an application, so it is not a programming interface ❌.
+
+## What is an API? 🤷‍♂️
+
+::::: columns
+::: {.column width="60%"}
+> You’re at a restaurant. The **menu represents the API**, showing you what’s available. **You don’t need to know how the kitchen works**; *you simply place your order* by choosing something from the menu. The waiter (the API) takes your request to the kitchen and brings you back the result. In the case of an API, it works similarly – you send a request and get a response.
+:::
+
+::: {.column width="40%"}
+![](images/CleanShot%202024-10-16%20at%2010.15.48@2x.png){fig-align="center"}
+:::
+:::::
+
+## What is an API? 🤷‍♂️
+
+Often the simplest function in your programming language are calling an API in the background.
+
+![](images/CleanShot%202024-10-16%20at%2009.37.47@2x.png){fig-align="center"}
+
+# Minimal example to host 🗂️
+
+------------------------------------------------------------------------
+
+::::: columns
+::: {.column width="40%"}
+![](images/CleanShot%202024-10-16%20at%2009.49.36@2x.png){fig-align="center"}
+:::
+
+::: {.column width="40%"}
+Plumber allows you to create a web API by merely decorating your existing R source code with `roxygen2`-like comments.
+:::
+:::::
+
+------------------------------------------------------------------------
+
+## Example code for the package 📦
+
+```{r}
+#| echo: true
+#| eval: false 
+#| file: example/plumber.R
+```
+
+------------------------------------------------------------------------
+
+## Just run it simply from R 🤖
+
+![](images/CleanShot%202024-10-16%20at%2009.56.40@2x.png){fig-align="center"}
+
+## And now what? 🤨
+
+::::: columns
+::: column
+![](images/CleanShot%202024-10-16%20at%2010.04.10@2x.png)
+:::
+
+::: column
+![](images/CleanShot%202024-10-16%20at%2011.15.40@2x.png)
+:::
+:::::
+
+You find the documentation of your API at `http://127.0.0.1:4066/__docs__/`
+
+Here you can try out how the functions work.
+
+## Test your API
+
+![](images/CleanShot%202024-10-16%20at%2011.20.50.gif)
+
+------------------------------------------------------------------------
+
+## Your first API 😍
+
+::::: columns
+::: column
+![](images/Safari%202024-10-16%2011.26.52.png){fig-align="center"}
+:::
+
+::: column
+1.  The **request URL**: This is the way you can call your API anywhere (try it in the browser and in R)
+2.  The **code**: Help you to understand whether the call was appropriate. 200 always refers to successful call.
+3.  **Response body**: This is a json in 99% of the cases.
+:::
+:::::
+
+## The request URL
+
+![](images/CleanShot%202024-10-16%20at%2011.31.50@2x.png)
+
+-   Do not worry, `%20` ony means space in this call.
+
+-   You can replace the msg parameter with anything you want.
+
+## The code
+
+::: r-fit-text
+These are pretty common.
+
+-   ✅ **200 OK**: The request was successful, and the server returned the requested data or performed the requested operation without any issues.
+
+-   **201 Created**: The request was successful, and a new resource (like a new entry in a database) was created.
+
+-   **204 No Content**: The request was successful, but there is no content to send in the response (often used when the request involved deleting or updating something).
+
+-   **400 Bad Request**: The server couldn’t understand the request due to malformed syntax, such as missing parameters or incorrect data format.
+
+-   **401 Unauthorized**: The request requires authentication, but either no valid authentication credentials were provided, or the credentials were incorrect.
+
+-   **403 Forbidden**: The server understood the request but refuses to authorize it, often due to lack of proper permissions.
+
+-   **404 Not Found**: The requested resource (e.g., a webpage or data) could not be found on the server.
+
+-   **429 Too Many Requests**: The client has sent too many requests in a given time period (rate-limiting), and the server is rejecting further requests.
+:::
+
+## Request in R
+
+If you need the orig call
+
+```{r cache=TRUE}
+#| echo: true
+response <- httr::GET("http://127.0.0.1:4066/echo?msg=test%20message")
+response
+```
+
+```{r}
+httr::content(response)
+```
+
+Get the content
+
+```{r cache=TRUE}
+#| echo: true
+body <- httr::content(response)
+body
+```
+
+## Request in R
+
+```{r}
+#| echo: true
+class(body)
+```
+
+The returned json is basicly a `list` in R.
+
+```{r}
+#| echo: true
+new_body <- list(
+  data = body, 
+  user = c("Me", "You")
+)
+
+jsonlite::toJSON(new_body)
+```
+
+`JSON` is a **universal notation** for hierarchical data. Similar to `csv` for tabular data.
+
+`[]` is for vectors and `{}` is for nested list.
+
+# Some examples of APIs for R 🤗
+
+-   `eurostat` package
+
+-   `wbstats` package (WordBank)
+
+-   `rdbnomics` package (DBnomics)
+
+-   `MarcellGranat/arcananum` (Arcanum, python)
+
+-   `polygon.io` (market data, raw)
+
+## Eurostat
+
+```{r}
+#| echo: true
+eurostat::search_eurostat("price") |> 
+  select(title, code, data.start, data.end) |>
+  print(n = 10)
+```
+
+## Eurostat
+
+```{r}
+#| echo: true
+# CPI from Eurostat
+cpi <- eurostat::get_eurostat("enps_cpi")
+cpi
+```
+
+## wbstats
+
+```{r}
+#| echo: true
+# Search indicator in the WorldBank's Database
+wbstats::wb_indicators()
+```
+
+## wbstats
+
+```{r}
+#| echo: true
+# GDP from WorldBank
+gdp <- wbstats::wb_data("NY.GDP.MKTP.CD")
+```
+
+## DBnomics
+
+![](images/CleanShot%202024-10-16%20at%2014.21.28@2x.png)
+
+## DBnomics
+
+```{r}
+#| echo: true
+df <- rdbnomics::rdb(ids = "AMECO/ZUTN/EA19.1.0.0.0.ZUTN")
+df
+```
+
+## Polygon.io
+
+![](images/CleanShot%202024-10-16%20at%2014.20.35@2x.png)
+
+## Polygon.io
+
+```{r}
+#| echo: true
+dotenv::load_dot_env(here::here(".Renviron")) # your key
+
+# Function to fetch stock data
+fetch_stock_url <- function(ticker, start, end) {
+  paste0(
+    "https://api.polygon.io/v2/aggs/ticker/",
+    ticker,
+    "/range/5/minute/",
+    start,
+    "/",
+    end,
+    "?apiKey=",
+    Sys.getenv("polygon_api_key")
+  )
+}
+
+# convert to json
+query_to_json <- function(query) {
+  jsonlite::fromJSON((rawToChar(query$content)))
+}
+
+# dttm_to_millisec
+dttm_to_millisec <- function(dttm) {
+  secs <- dttm |> 
+    lubridate::interval(start = lubridate::ymd("1970-01-01")) |> 
+    lubridate::as.difftime() |> 
+    as.numeric()
+
+  round(secs * 1000)
+}
+
+millisec_to_dttm <- function(x) {
+  as.POSIXct(round(x / 1000), origin = "1970-01-01")
+}
+
+get_stock_data <- function(ticker, start, end) {
+
+  url <- fetch_stock_url(
+    ticker = ticker,
+    start = format(dttm_to_millisec(start), scientific = FALSE),
+    end = format(dttm_to_millisec(end), scientific = FALSE)
+  ) 
+  
+  res <- httr::GET(url)
+
+  if (res$status_code != 200) {
+    cli::cli_abort("Error while fetching. Code {res$status_code}
+    url: {.url {url}}")
+  }
+
+  query_to_json(res) |> 
+    purrr::pluck("results") |> 
+    tibble::as_tibble()
+}
+
+mget_stock_data <- get_stock_data |> 
+  purrr::insistently(quiet = FALSE) |> 
+  memoise::memoise(cache = cachem::cache_disk(dir = here::here("_cache")))
+```
+
+# The last 72 hours of AAPL
+
+```{r}
+data <- mget_stock_data("AAPL", start = lubridate::today() - 3, end = lubridate::today()) |>
+  mutate(time = millisec_to_dttm(t), AAPL = c)
+
+data |>
+  echarts4r::e_chart(time) |>
+  echarts4r::e_line(AAPL) |>
+  echarts4r::e_tooltip(trigger = "axis") |>
+  echarts4r::e_y_axis(min = floor(min(data$AAPL) / 5) * 5)
+```
